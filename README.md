@@ -2,11 +2,12 @@
 
 > **Your Personal AI Companion System — Native to OpenCode**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-6366f1?style=flat-square)](https://github.com/)
+[![Version](https://img.shields.io/badge/version-1.0.0-6366f1?style=flat-square)](https://github.com/mutima89/zoey4opencode/releases)
 [![OpenCode Plugin](https://img.shields.io/badge/OpenCode-Plugin-8b5cf6?style=flat-square)](https://opencode.ai)
 [![License](https://img.shields.io/badge/license-MIT-a855f7?style=flat-square)](LICENSE)
 [![Privacy](https://img.shields.io/badge/privacy-local-22c55e?style=flat-square)]()
 [![Built with Bun](https://img.shields.io/badge/Bun-1.3%2B-0f172a?style=flat-square)](https://bun.sh)
+[![GitHub Pages](https://img.shields.io/badge/docs-online-22c55e?style=flat-square)](https://mutima89.github.io/zoey4opencode/)
 
 ---
 
