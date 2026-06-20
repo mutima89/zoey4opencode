@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+bun.lock
+bun.lockb
+
+# Build output
+dist/
+*.js.map
+*.d.ts
+*.d.ts.map
+
+# Database (local data — user-specific)
+store/
+*.db
+*.db-wal
+*.db-shm
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp
+.tmp/
+temp/

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoey4OpenCode — Non-Developer Guide</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.7;
+  }
+  .header {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  .header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+  .header p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+  .container { max-width: 800px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+  }
+  .card h2 {
+    font-size: 1.5rem;
+    color: #4f46e5;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h3 {
+    font-size: 1.15rem;
+    color: #1e293b;
+    margin: 20px 0 10px;
+  }
+  .card p { margin-bottom: 12px; color: #475569; }
+  .card ul { margin: 10px 0 10px 20px; color: #475569; }
+  .card li { margin-bottom: 6px; }
+
+  .tip-box {
+    background: #eef2ff;
+    border-left: 4px solid #6366f1;
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 16px 0;
+  }
+  .tip-box strong { color: #4f46e5; }
+
+  .companion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .companion-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .companion-card .emoji { font-size: 2.5rem; margin-bottom: 8px; }
+  .companion-card .name { font-weight: 700; font-size: 1.1rem; }
+  .companion-card .role { color: #6366f1; font-size: 0.85rem; font-weight: 600; margin: 4px 0; }
+  .companion-card .desc { font-size: 0.85rem; color: #64748b; }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+    padding: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    background: #6366f1;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { display: block; margin-bottom: 4px; }
+  .step-content p { font-size: 0.9rem; margin: 0; color: #475569; }
+
+  code {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  }
+  code.inline {
+    background: #e2e8f0;
+    color: #4f46e5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+
+  .footer {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    padding: 30px;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.8rem; }
+    .card { padding: 20px; }
+    .companion-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Zoey4OpenCode</h1>
+  <p>A friendly guide for everyone — no coding experience needed</p>
+</div>
+
+<div class="container">
+
+  <!-- INTRO -->
+  <div class="card">
+    <h2>What is Zoey4OpenCode?</h2>
+    <p>
+      Zoey4OpenCode gives you a <strong>team of AI helpers</strong> (we call them "companions")
+      that live inside OpenCode, a code-editing tool. Each companion has a different specialty,
+      like researching topics, designing plans, managing servers, or reviewing work.
+    </p>
+    <p>
+      Think of them like a team of experts you can call on whenever you need help.
+      They also <strong>remember things</strong> — so if you tell one companion something
+      important, the others will know about it too, even days later.
+    </p>
+    <div class="tip-box">
+      <strong>No technical knowledge needed.</strong> If you can type a question, you can use Zoey4OpenCode.
+      Just mention a companion's name (like @Atlas) and ask for help.
+    </div>
+  </div>
+
+  <!-- MEET THE COMPANIONS -->
+  <div class="card">
+    <h2>Meet Your AI Companions</h2>
+    <p>You have four companions to choose from, each with their own personality and skills:</p>
+
+    <div class="companion-grid">
+      <div class="companion-card">
+        <div class="emoji">🔬</div>
+        <div class="name">Atlas</div>
+        <div class="role">Research & Analysis</div>
+        <div class="desc">Your go-to for finding information, reading documents, and summarizing things. Ask Atlas anything!</div>
+      </div>
+      <div class="companion-card">
+        <div class="emoji">🏗️</div>
+        <div class="name">Architect</div>
+        <div class="role">System Design</div>
+        <div class="desc">The planner. Architect helps you think through how things should be built and organized.</div>
+      </div>
+      <div class="companion-card">
+        <div class="emoji">⚙️</div>
+        <div class="name">Operator</div>
+        <div class="role">DevOps & Operations</div>
+        <div class="desc">The builder. Operator handles deployments, servers, and keeping things running smoothly.</div>
+      </div>
+      <div class="companion-card">
+        <div class="emoji">💡</div>
+        <div class="name">Mentor</div>
+        <div class="role">Code Review & Teaching</div>
+        <div class="desc">The teacher. Mentor reviews work, suggests improvements, and explains complex topics.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO TALK TO COMPANIONS -->
+  <div class="card">
+    <h2>How to Talk to Your Companions</h2>
+    <p>It's as simple as typing their name with an <code class="inline">@</code> symbol in front, followed by your question or request.</p>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Type @ and the companion's name</strong>
+        <p>For example: <code>@Atlas</code> or <code>@Mentor</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Tell them what you need</strong>
+        <p>Just ask naturally, like you would a colleague: <code>@Atlas What is the latest version of React?</code></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Get your answer</strong>
+        <p>The companion will respond with helpful information, suggestions, or ask clarifying questions.</p>
+      </div>
+    </div>
+
+    <h3>Example Conversations</h3>
+    <ul>
+      <li><code>@Atlas Research the best database for a small business website</code></li>
+      <li><code>@Architect How should I organize this project?</code></li>
+      <li><code>@Operator Deploy this application step by step</code></li>
+      <li><code>@Mentor Can you review this code and suggest improvements?</code></li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Tip:</strong> You don't need to remember which companion to use. Just describe what you need
+      and the system will help. If you're not sure, start with <strong>@Atlas</strong> — they're great
+      at figuring out what you need and who can help.
+    </div>
+  </div>
+
+  <!-- MEMORY -->
+  <div class="card">
+    <h2>🧠 How Memory Works</h2>
+    <p>
+      Normally, AI assistants forget everything once you close a conversation. Zoey4OpenCode is different.
+      It has a <strong>memory</strong> — like a notebook that all companions can read and write to.
+    </p>
+    <p>This means:</p>
+    <ul>
+      <li><strong>Tell once, remembered forever</strong> — "We decided to use SQLite" gets saved and everyone knows</li>
+      <li><strong>Cross-session memory</strong> — What you talked about yesterday is still there today</li>
+      <li><strong>Tag your memories</strong> — Add labels like "decision" or "config" to organize things</li>
+    </ul>
+
+    <h3>Simple Memory Commands</h3>
+    <ul>
+      <li><code>/memory save "We chose blue for the logo" tags=design,decision</code> — Save something important</li>
+      <li><code>/memory recall "logo color"</code> — Find what was saved about a topic</li>
+      <li><code>/memory list</code> — See your recent saved notes</li>
+      <li><code>/memory stats</code> — See how many memories you have</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Pro tip:</strong> Get in the habit of saving decisions right after making them.
+      Future you will thank past you when you can instantly recall why something was done a certain way!
+    </div>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="card">
+    <h2>❓ Common Questions</h2>
+
+    <h3>I typed @Atlas but nothing happened?</h3>
+    <p>Make sure OpenCode is running and the Zoey plugin is loaded. Try typing <code>/companion list</code>
+    to check if everything is working.</p>
+
+    <h3>Can I talk to multiple companions at once?</h3>
+    <p>Yes! Each companion works independently. You can ask @Atlas a research question,
+    then immediately ask @Mentor to review something else.</p>
+
+    <h3>Is my data private?</h3>
+    <p>Absolutely. Everything stays on your computer. The memory database is stored locally
+    in a folder on your machine. Nothing is sent to any cloud service.</p>
+
+    <h3>What if I want to clear the memory?</h3>
+    <p>You can delete individual memories with <code>/memory forget [id]</code>,
+    or remove the entire memory database from the store folder.</p>
+
+    <h3>Can I customize how a companion behaves?</h3>
+    <p>Yes! Use <code>/companion configure Mentor "instructions"</code> to add custom instructions.
+    For example: "Focus on security when reviewing code."</p>
+  </div>
+
+  <!-- GETTING HELP -->
+  <div class="card" style="background:#eef2ff;border-color:#6366f1;">
+    <h2 style="color:#4f46e5;">🌟 Quick Start Checklist</h2>
+    <ul>
+      <li>Restart OpenCode after installation</li>
+      <li>Try: <code>@Atlas What can you help me with?</code></li>
+      <li>Try: <code>/companion list</code> to see all companions</li>
+      <li>Try: <code>/memory save "This is my first memory" tags=first</code></li>
+      <li>Try: <code>/memory recall "first"</code> to find it again</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  Zoey4OpenCode v1.0 — Built for OpenCode — Your data stays on your machine
+</div>
+
+</body>
+</html>

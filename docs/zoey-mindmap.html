@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoey4OpenCode — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 20px 0 8px;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  .mindmap {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ===== CENTER NODE ===== */
+  .center-node {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    padding: 24px 48px;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 0 40px rgba(99,102,241,0.3);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  .center-node small {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 400;
+    opacity: 0.85;
+    margin-top: 6px;
+  }
+
+  /* ===== BRANCHES ===== */
+  .branches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  .branch {
+    background: #1e293b;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #334155;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .branch:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .branch-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #334155;
+  }
+  .branch-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .branch-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .branch-desc {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+  .branch-body { padding-left: 4px; }
+
+  /* ===== NODES ===== */
+  .node {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .node:hover { border-color: #6366f1; }
+  .node-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .node-name .badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: #334155;
+    color: #94a3b8;
+  }
+  .node-desc {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .node-children {
+    margin-left: 16px;
+    margin-top: 8px;
+    padding-left: 12px;
+    border-left: 2px solid #1e293b;
+  }
+  .leaf {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .leaf::before { content: "●"; color: #475569; font-size: 0.5rem; }
+
+  /* ===== CONNECTION LABEL ===== */
+  .connection-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #64748b;
+    font-size: 0.85rem;
+    margin: 8px 0;
+    width: 100%;
+  }
+  .connection-label span { opacity: 0.6; }
+
+  /* ===== LEGEND ===== */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin: 30px 0 20px;
+    padding: 16px 24px;
+    background: #1e293b;
+    border-radius: 12px;
+    border: 1px solid #334155;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+  }
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  /* ===== TOGGLE ===== */
+  .connection-flow {
+    text-align: center;
+    padding: 16px;
+    background: #1e293b;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    margin-top: 10px;
+    width: 100%;
+  }
+  .flow-steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .flow-step {
+    background: #0f172a;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    border: 1px solid #334155;
+  }
+  .flow-arrow { color: #6366f1; font-weight: 700; font-size: 1.2rem; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.6rem; }
+    .center-node { padding: 16px 24px; font-size: 1.2rem; }
+    .branches { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Zoey4OpenCode</h1>
+<p class="subtitle">Visual Architecture Map — How Everything Connects</p>
+
+<div class="mindmap">
+
+  <!-- CENTER -->
+  <div class="center-node">
+    Zoey4OpenCode
+    <small>AI Companion System for OpenCode</small>
+  </div>
+
+  <!-- BRANCHES -->
+  <div class="branches">
+
+    <!-- Branch 1: Companions -->
+    <div class="branch">
+      <div class="branch-header">
+        <div class="branch-icon" style="background:#1e1b4b;color:#a78bfa;">🤖</div>
+        <div>
+          <div class="branch-title">Companions</div>
+          <div class="branch-desc">Specialized AI agents you talk to</div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="node">
+          <div class="node-name">Atlas <span class="badge">Research</span></div>
+          <div class="node-desc">Web search, documentation reading, data synthesis</div>
+          <div class="node-children">
+            <div class="leaf">Search the web via websearch/webfetch</div>
+            <div class="leaf">Read and summarize documentation</div>
+            <div class="leaf">Synthesize findings into reports</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Architect <span class="badge">Design</span></div>
+          <div class="node-desc">System design, planning, ADRs, structure review</div>
+          <div class="node-children">
+            <div class="leaf">Design system architecture</div>
+            <div class="leaf">Break down features into tasks</div>
+            <div class="leaf">Review module boundaries</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Operator <span class="badge">DevOps</span></div>
+          <div class="node-desc">Deployment, infrastructure, CI/CD, automation</div>
+          <div class="node-children">
+            <div class="leaf">Manage Docker and cloud resources</div>
+            <div class="leaf">Design CI/CD pipelines</div>
+            <div class="leaf">Write automation scripts</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Mentor <span class="badge">Review</span></div>
+          <div class="node-desc">Code review, best practices, teaching</div>
+          <div class="node-children">
+            <div class="leaf">Review code for correctness and security</div>
+            <div class="leaf">Teach programming patterns</div>
+            <div class="leaf">Enforce coding standards</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branch 2: Memory System -->
+    <div class="branch">
+      <div class="branch-header">
+        <div class="branch-icon" style="background:#0c1929;color:#38bdf8;">💾</div>
+        <div>
+          <div class="branch-title">Memory System</div>
+          <div class="branch-desc">Persistent storage across sessions</div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="node">
+          <div class="node-name">SQLite Database</div>
+          <div class="node-desc">Local file-based storage — no server needed</div>
+          <div class="node-children">
+            <div class="leaf">zoey-memory.db — all memory entries</div>
+            <div class="leaf">zoey-companions.db — companion state</div>
+            <div class="leaf">Stored locally in ~/.config/opencode/plugins/zoey4opencode/store/</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Memory Tools</div>
+          <div class="node-desc">Operations to store and retrieve information</div>
+          <div class="node-children">
+            <div class="leaf">Save — Store decisions, patterns, facts</div>
+            <div class="leaf">Recall — Find by keyword search</div>
+            <div class="leaf">Search — Filter by tag, agent, content</div>
+            <div class="leaf">List — Browse recent entries</div>
+            <div class="leaf">Forget — Delete specific entries</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">What to Store</div>
+          <div class="node-desc">Best use cases for memory</div>
+          <div class="node-children">
+            <div class="leaf">Architecture decisions and rationale</div>
+            <div class="leaf">Project conventions and patterns</div>
+            <div class="leaf">Debugging discoveries</div>
+            <div class="leaf">Configuration details</div>
+            <div class="leaf">Lessons learned</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branch 3: Plugin -->
+    <div class="branch">
+      <div class="branch-header">
+        <div class="branch-icon" style="background:#1a0a2e;color:#c084fc;">🔌</div>
+        <div>
+          <div class="branch-title">Plugin</div>
+          <div class="branch-desc">OpenCode integration layer</div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="node">
+          <div class="node-name">Tools Registered</div>
+          <div class="node-desc">Custom actions available to all agents</div>
+          <div class="node-children">
+            <div class="leaf">zoey.memory.save / recall / search</div>
+            <div class="leaf">zoey.memory.list / forget / stats</div>
+            <div class="leaf">zoey.companion.list / switch / status</div>
+            <div class="leaf">zoey.companion.configure</div>
+            <div class="leaf">zoey.integration.list</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Built With</div>
+          <div class="node-desc">Technology stack</div>
+          <div class="node-children">
+            <div class="leaf">TypeScript + Bun runtime</div>
+            <div class="leaf">Bun:sqlite for storage</div>
+            <div class="leaf">@opencode-ai/plugin SDK</div>
+            <div class="leaf">465KB compiled bundle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branch 4: Interface -->
+    <div class="branch">
+      <div class="branch-header">
+        <div class="branch-icon" style="background:#0f1a1a;color:#34d399;">🎮</div>
+        <div>
+          <div class="branch-title">Interface</div>
+          <div class="branch-desc">How you interact</div>
+        </div>
+      </div>
+      <div class="branch-body">
+        <div class="node">
+          <div class="node-name">@Mention Companions</div>
+          <div class="node-desc">Talk to any companion directly</div>
+          <div class="node-children">
+            <div class="leaf">@Atlas — "Research latest AI trends"</div>
+            <div class="leaf">@Architect — "Design the API"</div>
+            <div class="leaf">@Operator — "Deploy to production"</div>
+            <div class="leaf">@Mentor — "Review my code"</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Commands</div>
+          <div class="node-desc">Quick actions via slash commands</div>
+          <div class="node-children">
+            <div class="leaf">/companion list / switch / status</div>
+            <div class="leaf">/memory save / recall / search / stats</div>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-name">Skill</div>
+          <div class="node-desc">Zoey companion skill auto-loads</div>
+          <div class="node-children">
+            <div class="leaf">Provides usage guidance</div>
+            <div class="leaf">Shows available workflows</div>
+            <div class="leaf">Triggers on companion keywords</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /branches -->
+
+  <!-- CONNECTION FLOW -->
+  <div class="connection-flow">
+    <strong>How It All Flows Together</strong>
+    <div class="flow-steps">
+      <span class="flow-step">You type <strong>@Atlas</strong> or <strong>/memory</strong></span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">OpenCode routes to the plugin</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Plugin calls SQLite database</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Result comes back to you</span>
+    </div>
+    <div style="margin-top:10px;font-size:0.8rem;color:#64748b;">
+      Everything runs locally on your machine. No cloud, no servers, no data leaving your computer.
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#a78bfa;"></div>
+      Companions
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#38bdf8;"></div>
+      Memory/Storage
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#c084fc;"></div>
+      Plugin/Tech
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#34d399;"></div>
+      Interface
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;color:#475569;font-size:0.8rem;margin:30px 0 10px;">
+  Zoey4OpenCode v1.0 — OpenCode Plugin
+</p>
+
+</body>
+</html>

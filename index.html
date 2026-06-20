@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoey4OpenCode — AI Companions for OpenCode</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  a { color: #818cf8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 80px 20px 60px;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    border-bottom: 1px solid #1e293b;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #818cf8, #c084fc, #e879f9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .hero .sub {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+  .hero .badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  .hero .badge {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+  }
+  .hero .badge.purple { border-color: #6366f1; color: #a5b4fc; }
+  .hero .badge.green { border-color: #22c55e; color: #86efac; }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.2s;
+    margin: 4px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.3); text-decoration: none; }
+  .btn-secondary {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+  }
+  .btn-secondary:hover { background: #334155; text-decoration: none; }
+
+  /* COMPANIONS */
+  .companions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+  .companion-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .companion-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .companion-card .emoji { font-size: 3rem; margin-bottom: 12px; }
+  .companion-card .name { font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+  .companion-card .role { color: #818cf8; font-weight: 600; font-size: 0.85rem; margin-bottom: 10px; }
+  .companion-card p { color: #94a3b8; font-size: 0.9rem; }
+
+  /* SECTIONS */
+  .section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .section h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #f1f5f9;
+  }
+  .section h2 .highlight { color: #818cf8; }
+  .section p { color: #94a3b8; margin-bottom: 16px; font-size: 1.05rem; }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .feature-item {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .feature-item .icon { font-size: 2rem; margin-bottom: 8px; }
+  .feature-item .label { font-weight: 600; font-size: 0.95rem; }
+  .feature-item .desc { color: #64748b; font-size: 0.8rem; margin-top: 4px; }
+
+  /* DOC LINKS */
+  .doc-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .doc-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .doc-card:hover { border-color: #6366f1; }
+  .doc-card .title { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; display: block; }
+  .doc-card p { font-size: 0.85rem; color: #64748b; margin: 0; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid #1e293b;
+    color: #475569;
+    font-size: 0.9rem;
+    margin-top: auto;
+  }
+  footer strong { color: #64748b; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px; }
+    .hero h1 { font-size: 2rem; }
+    .companions { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Zoey4OpenCode</h1>
+  <p class="sub">Your personal AI companion system — native to OpenCode</p>
+  <div class="badges">
+    <span class="badge purple">🤖 4 AI Companions</span>
+    <span class="badge green">💾 Persistent Memory</span>
+    <span class="badge">🔌 OpenCode Plugin</span>
+    <span class="badge green">🔒 100% Local & Private</span>
+    <span class="badge">⚡ Bun + SQLite</span>
+  </div>
+  <div>
+    <a href="docs/zoey-user-guide.html" class="btn btn-primary">Get Started</a>
+    <a href="https://github.com/yourusername/zoey4opencode" class="btn btn-secondary">View on GitHub</a>
+  </div>
+</div>
+
+<div class="companions">
+  <div class="companion-card">
+    <div class="emoji">🔬</div>
+    <div class="name">Atlas</div>
+    <div class="role">Research &amp; Analysis</div>
+    <p>Gathers intelligence, reads docs, synthesizes findings. Your go-to for any research question.</p>
+  </div>
+  <div class="companion-card">
+    <div class="emoji">🏗️</div>
+    <div class="name">Architect</div>
+    <div class="role">System Design</div>
+    <p>Designs architecture, plans features, reviews structure. The big-picture thinker.</p>
+  </div>
+  <div class="companion-card">
+    <div class="emoji">⚙️</div>
+    <div class="name">Operator</div>
+    <div class="role">DevOps &amp; Operations</div>
+    <p>Manages infrastructure, deployments, CI/CD. Safety-first, precise, automated.</p>
+  </div>
+  <div class="companion-card">
+    <div class="emoji">💡</div>
+    <div class="name">Mentor</div>
+    <div class="role">Code Review &amp; Teaching</div>
+    <p>Reviews code, teaches patterns, enforces quality. Your supportive programming teacher.</p>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Why <span class="highlight">Zoey4OpenCode</span>?</h2>
+  <p>
+    OpenCode already has powerful AI capabilities, but it's missing two things: 
+    <strong>persistent memory</strong> and <strong>specialized companion agents</strong>.
+    Zoey4OpenCode fills that gap with a complete companion ecosystem.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature-item">
+      <div class="icon">🧠</div>
+      <div class="label">Never Forget</div>
+      <div class="desc">SQLite-backed memory across sessions</div>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🤖</div>
+      <div class="label">4 Specialists</div>
+      <div class="desc">Each with unique expertise and personality</div>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🔌</div>
+      <div class="label">Native Plugin</div>
+      <div class="desc">Deep integration with OpenCode</div>
+    </div>
+    <div class="feature-item">
+      <div class="icon">🔒</div>
+      <div class="label">100% Private</div>
+      <div class="desc">All data local — zero cloud calls</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>📚 Documentation</h2>
+  <div class="doc-links">
+    <a href="docs/zoey-mindmap.html" class="doc-card" style="display:block;">
+      <span class="title">🗺️ Mind Map</span>
+      <p>Visual architecture map — see how all components connect at a glance.</p>
+    </a>
+    <a href="docs/zoey-nondev-guide.html" class="doc-card" style="display:block;">
+      <span class="title">👋 Non-Developer Guide</span>
+      <p>Plain-language guide for everyone. No technical knowledge needed.</p>
+    </a>
+    <a href="docs/zoey-user-guide.html" class="doc-card" style="display:block;">
+      <span class="title">📖 User Guide</span>
+      <p>Complete reference: install, interact, adjust, troubleshoot.</p>
+    </a>
+  </div>
+</div>
+
+<div class="section" style="text-align:center;padding-bottom:60px;">
+  <h2>Ready to try it?</h2>
+  <p style="max-width:500px;margin:0 auto 24px;">
+    One command to get started. Everything runs locally on your machine.
+  </p>
+  <a href="docs/zoey-user-guide.html" class="btn btn-primary">Read the User Guide</a>
+</div>
+
+<footer>
+  <strong>Zoey4OpenCode</strong> &mdash; AI companions for OpenCode.<br>
+  Built with ❤️ &mdash; Your data stays on your machine.
+</footer>
+
+</body>
+</html>
