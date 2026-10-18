@@ -9,6 +9,9 @@
 [![Built with Bun](https://img.shields.io/badge/Bun-1.3%2B-0f172a?style=flat-square)](https://bun.sh)
 [![GitHub Pages](https://img.shields.io/badge/docs-online-22c55e?style=flat-square)](https://mutima89.github.io/zoey4opencode/)
 
+> [!NOTE]
+> **This repository holds the documentation site** ([live here](https://mutima89.github.io/zoey4opencode/)): `index.html` and the guides in `docs/`. The plugin's TypeScript source, agent definitions and build scripts described below are not committed here yet, so the install and development commands will not work from a clone of this repo.
+
 ---
 
 ## 🌟 What Is Zoey4OpenCode?
@@ -143,7 +146,7 @@ bun run build
 
 ---
 
-## 📂 Project Structure
+## 📂 Installed Layout (after setup)
 
 ```
 ~/.config/opencode/
@@ -167,6 +170,21 @@ bun run build
 │   ├── companion.md
 │   └── memory.md
 └── opencode.json               ← Plugin registration
+```
+
+---
+
+## 🗂 What's in this repository
+
+```
+zoey4opencode/
+├── index.html                  ← Documentation home page (GitHub Pages)
+├── docs/
+│   ├── zoey-mindmap.html       ← Architecture mind map
+│   ├── zoey-nondev-guide.html  ← Guide for non-technical users
+│   └── zoey-user-guide.html    ← Install, interact and adjust reference
+├── README.md
+└── LICENSE
 ```
 
 ---
@@ -222,6 +240,8 @@ bun run build
 
 ## 🧪 Development
 
+These commands apply to the plugin source, which is not in this repository yet.
+
 ```bash
 # Install dependencies
 bun install
@@ -258,7 +278,7 @@ Contributions are welcome! Here's how you can help:
 
 ## 📄 License
 
-MIT — Free for personal and commercial use.
+MIT — see [`LICENSE`](LICENSE).
 
 ---
 
