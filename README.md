@@ -1,296 +1,174 @@
-# Zoey4OpenCode 🧠🤖
+<div align="center">
 
-> **Your Personal AI Companion System — Native to OpenCode**
+# Zoey4OpenCode
 
-[![Version](https://img.shields.io/badge/version-1.0.0-6366f1?style=flat-square)](https://github.com/mutima89/zoey4opencode/releases)
-[![OpenCode Plugin](https://img.shields.io/badge/OpenCode-Plugin-8b5cf6?style=flat-square)](https://opencode.ai)
-[![License](https://img.shields.io/badge/license-MIT-a855f7?style=flat-square)](LICENSE)
-[![Privacy](https://img.shields.io/badge/privacy-local-22c55e?style=flat-square)]()
-[![Built with Bun](https://img.shields.io/badge/Bun-1.3%2B-0f172a?style=flat-square)](https://bun.sh)
-[![GitHub Pages](https://img.shields.io/badge/docs-online-22c55e?style=flat-square)](https://mutima89.github.io/zoey4opencode/)
+**Four specialised AI companions with shared, persistent memory — native to OpenCode, running entirely on your machine.**
+
+[![Docs site](https://img.shields.io/badge/docs-live-22c55e)](https://mutima89.github.io/zoey4opencode/)
+[![OpenCode](https://img.shields.io/badge/OpenCode-plugin-8b5cf6)](https://opencode.ai)
+[![Bun](https://img.shields.io/badge/Bun-1.3%2B-0f172a?logo=bun)](https://bun.sh)
+[![Local only](https://img.shields.io/badge/data-stays%20local-22c55e)](#privacy)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
+[Documentation](https://mutima89.github.io/zoey4opencode/) · [Companions](#the-companions) · [Using it](#using-it) · [Architecture](#architecture) · [Privacy](#privacy)
+
+![Zoey4OpenCode documentation home](docs/screenshots/home.png)
+
+</div>
+
+---
 
 > [!NOTE]
-> **This repository holds the documentation site** ([live here](https://mutima89.github.io/zoey4opencode/)): `index.html` and the guides in `docs/`. The plugin's TypeScript source, agent definitions and build scripts described below are not committed here yet, so the install and development commands will not work from a clone of this repo.
+> **This repository is the documentation site**, published at [mutima89.github.io/zoey4opencode](https://mutima89.github.io/zoey4opencode/). The plugin's TypeScript source, agent definitions and build scripts are not committed here yet, so the install and development steps below describe the plugin as distributed separately and will not work from a clone of this repository.
 
----
+## Overview
 
-## 🌟 What Is Zoey4OpenCode?
+Zoey4OpenCode adds a small team of AI companions to [OpenCode](https://opencode.ai), each tuned for one kind of work, plus a SQLite-backed memory they all share — so a decision recorded on Monday is still known on Friday.
 
-**Zoey4OpenCode** is a complete AI companion system that lives inside [OpenCode](https://opencode.ai). It gives you a **team of four specialized AI agents** — each with its own personality and expertise — plus a **persistent memory system** so nothing is ever forgotten.
+| | |
+|---|---|
+| **Four companions** | Atlas (research), Architect (design), Operator (DevOps), Mentor (review and teaching) |
+| **Persistent memory** | Save, recall, search, list and forget facts across sessions, tagged by topic |
+| **Three ways in** | `@mentions`, slash commands, or direct tool calls |
+| **Local and private** | Memory lives in two SQLite files on your machine; no telemetry |
+| **Stack** | TypeScript on Bun, `bun:sqlite` storage, the `@opencode-ai/plugin` SDK |
 
-Think of it as having four expert colleagues on call 24/7:
-- A **researcher** who digs up information
-- An **architect** who plans and designs
-- An **operator** who handles deployments
-- A **mentor** who reviews and teaches
+## Documentation
 
-Everything runs **locally on your machine**. Zero cloud, zero data leaks, zero subscriptions.
+| Guide | For |
+|---|---|
+| [Home](https://mutima89.github.io/zoey4opencode/) | What it is and the four companions |
+| [Architecture mind map](https://mutima89.github.io/zoey4opencode/docs/zoey-mindmap.html) | How companions, memory, plugin tools and commands connect |
+| [Non-developer guide](https://mutima89.github.io/zoey4opencode/docs/zoey-nondev-guide.html) | Friendly walkthrough, no coding experience needed |
+| [User guide](https://mutima89.github.io/zoey4opencode/docs/zoey-user-guide.html) | Install, interact and customise — full reference |
 
----
+| Architecture mind map | User guide |
+|:---:|:---:|
+| ![Architecture mind map](docs/screenshots/mindmap.png) | ![User guide](docs/screenshots/user-guide.png) |
 
-## ✨ Features
+<details>
+<summary>Non-developer guide</summary>
 
-| Feature | Description |
-|---------|-------------|
-| **🤖 4 AI Companions** | Atlas (research), Architect (design), Operator (devops), Mentor (review) |
-| **💾 Persistent Memory** | SQLite-backed — agents remember across sessions, days, weeks |
-| **🔌 Native OpenCode Plugin** | Deep integration with OpenCode's agent, command, and skill systems |
-| **🎮 3 Interaction Modes** | @mentions, slash commands, or direct tool calls |
-| **🔒 100% Local & Private** | All data stays on your machine — no servers, no cloud, no tracking |
-| **⚡ Blazing Fast** | Built with Bun + TypeScript, SQLite for instant storage |
-| **🎨 Fully Customizable** | Custom instructions, companion configuration, skill customization |
+![Non-developer guide](docs/screenshots/nondev-guide.png)
 
----
+</details>
 
-## 🧑‍🤝‍🧑 Meet Your Companions
+## The companions
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│    🔬 Atlas           🏗️ Architect        ⚙️ Operator      │
-│    Research &         System Design &     DevOps &          │
-│    Analysis           Planning            Operations        │
-│                                                             │
-│    💡 Mentor                                               │
-│    Code Review &                                            │
-│    Best Practices                                           │
-│                                                             │
-│         All connected to a shared persistent memory         │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+| Companion | Role | Best for | Temperature |
+|---|---|---|---|
+| **Atlas** | Research and analysis | Web research, reading documentation, synthesising findings | 0.3 |
+| **Architect** | System design | Architecture, feature planning, technical decisions | 0.2 |
+| **Operator** | DevOps and operations | Docker, CI/CD, deployments, scripting | 0.1 |
+| **Mentor** | Review and teaching | Code review, best practices, explaining patterns | 0.3 |
 
-### 🔬 **Atlas** — Research & Analysis Companion
-- **Role:** Gathers intelligence, reads docs, synthesizes findings
-- **Best for:** Web research, documentation analysis, data synthesis
-- **Temperature:** 0.3 (balanced, thorough)
-- **Try saying:** *"@Atlas Research the best database for a real-time chat app"*
+## Using it
 
-### 🏗️ **Architect** — System Design Companion
-- **Role:** Designs architecture, plans features, reviews structure
-- **Best for:** System design, feature planning, technical decisions
-- **Temperature:** 0.2 (precise, structured)
-- **Try saying:** *"@Architect Design the folder structure for a microservices app"*
+**Talk to a companion**
 
-### ⚙️ **Operator** — DevOps & Operations Companion
-- **Role:** Manages infrastructure, deployment, CI/CD, automation
-- **Best for:** Docker, cloud, pipelines, scripting
-- **Temperature:** 0.1 (deterministic, exact)
-- **Try saying:** *"@Operator Set up a Docker Compose for this project"*
-
-### 💡 **Mentor** — Code Review & Teaching Companion
-- **Role:** Reviews code, teaches patterns, enforces quality
-- **Best for:** Code review, best practices, learning
-- **Temperature:** 0.3 (supportive, clear)
-- **Try saying:** *"@Mentor Review my authentication module for security issues"*
-
----
-
-## 🚀 Quick Start (30 Seconds)
-
-### Prerequisites
-- [OpenCode](https://opencode.ai) installed
-- [Bun](https://bun.sh) v1.0+ installed
-
-### Installation
-
-```bash
-# 1. Go to the plugin directory
-cd ~/.config/opencode/plugins/zoey4opencode
-
-# 2. Install dependencies
-bun install
-
-# 3. Build the plugin
-bun run build
-
-# 4. Add to opencode.json
-#    (Already done if you're reading this after setup)
-```
-
-### Verify It Works
-```bash
-# Restart OpenCode, then type:
-/companion list        # → Shows 4 companions
-@Atlas Hello!          # → Atlas responds
-/memory stats          # → Shows memory statistics
-```
-
----
-
-## 🎮 How to Use
-
-### Talk to Companions
-```
-@Atlas What's the latest React version?
+```text
+@Atlas What's the latest stable React version?
 @Architect How should I structure this API?
-@Operator Deploy this to production safely
+@Operator Set up Docker Compose for this project
 @Mentor Review my error handling
 ```
 
-### Manage Memory
-```
+**Work with memory**
+
+```text
 /memory save "Use SQLite for local storage" tags=decision,database
 /memory recall "database decision"
 /memory list
 /memory stats
 ```
 
-### Manage Companions
-```
+**Manage companions**
+
+```text
 /companion list
 /companion switch Atlas
 /companion status
 /companion configure Mentor "Focus on security"
 ```
 
----
+### Installation (plugin distribution)
 
-## 📂 Installed Layout (after setup)
+Requires OpenCode and Bun 1.0 or newer.
 
+```bash
+cd ~/.config/opencode/plugins/zoey4opencode
+bun install
+bun run build
 ```
+
+Register the plugin in `opencode.json`, restart OpenCode, then run `/companion list` to confirm the four companions are loaded. The [user guide](https://mutima89.github.io/zoey4opencode/docs/zoey-user-guide.html) has the full steps.
+
+## Architecture
+
+```mermaid
+flowchart TB
+    subgraph OpenCode
+        U[You: @mentions · /commands · tool calls]
+        subgraph Plugin[Zoey4OpenCode plugin]
+            MT[Memory tools]
+            CT[Companion tools]
+        end
+        A[Atlas]:::c
+        R[Architect]:::c
+        O[Operator]:::c
+        M[Mentor]:::c
+    end
+    DB1[(zoey-memory.db)]
+    DB2[(zoey-companions.db)]
+    U --> A & R & O & M
+    A & R & O & M --> MT
+    U --> CT
+    MT --> DB1
+    CT --> DB2
+    classDef c fill:#ede9fe,stroke:#7c3aed,color:#1e1b4b
+```
+
+Installed layout:
+
+```text
 ~/.config/opencode/
-├── agent/companions/           ← Companion definitions (loaded automatically)
-│   ├── atlas.md
-│   ├── architect.md
-│   ├── operator.md
-│   └── mentor.md
-├── plugins/zoey4opencode/      ← The plugin (TypeScript + Bun)
-│   ├── src/
-│   │   ├── index.ts            ← Plugin entry, tool registration
-│   │   ├── memory-store.ts     ← SQLite memory system
-│   │   └── companion-manager.ts ← Companion state management
-│   ├── store/                  ← SQLite databases (auto-created)
-│   │   ├── zoey-memory.db
-│   │   └── zoey-companions.db
-│   ├── dist/index.js           ← Compiled plugin
-│   └── docs/                   ← 📚 You are here
-├── skills/zoey-companions/     ← Auto-loading skill
-├── commands/                   ← Slash commands
-│   ├── companion.md
-│   └── memory.md
-└── opencode.json               ← Plugin registration
+├── agent/companions/        atlas.md · architect.md · operator.md · mentor.md
+├── plugins/zoey4opencode/   src/ · dist/index.js · store/ (SQLite databases)
+├── skills/zoey-companions/  auto-loading skill
+├── commands/                companion.md · memory.md
+└── opencode.json            plugin registration
 ```
 
----
+## Privacy
 
-## 🗂 What's in this repository
+| Question | Answer |
+|---|---|
+| Where is memory stored? | `~/.config/opencode/plugins/zoey4opencode/store/` |
+| Is it sent anywhere? | No; memory and companion state never leave your machine |
+| Back up? | Copy the two `.db` files in `store/` |
+| Start fresh? | Delete `store/`; the databases are recreated |
+| Telemetry? | None |
 
-```
+Your prompts still go to whichever model provider OpenCode is configured to use.
+
+## This repository
+
+```text
 zoey4opencode/
-├── index.html                  ← Documentation home page (GitHub Pages)
+├── index.html              Documentation home (GitHub Pages)
 ├── docs/
-│   ├── zoey-mindmap.html       ← Architecture mind map
-│   ├── zoey-nondev-guide.html  ← Guide for non-technical users
-│   └── zoey-user-guide.html    ← Install, interact and adjust reference
+│   ├── zoey-mindmap.html
+│   ├── zoey-nondev-guide.html
+│   ├── zoey-user-guide.html
+│   └── screenshots/
 ├── README.md
 └── LICENSE
 ```
 
----
+## Acknowledgements
 
-## 🔒 Privacy & Data
+Inspired by [Zoey OS](https://zoeyos.com). Built for [OpenCode](https://opencode.ai) and powered by [Bun](https://bun.sh).
 
-| Concern | Answer |
-|---------|--------|
-| Where is my data stored? | Locally in `~/.config/opencode/plugins/zoey4opencode/store/` |
-| Is data sent anywhere? | **Never.** Zero network calls for memory/companion data |
-| Can I back up? | Yes — copy the two `.db` files in `store/` |
-| Can I delete everything? | Delete the `store/` folder — databases recreate fresh |
-| Do you track usage? | No telemetry, no analytics, no logging |
+## License
 
----
-
-## 🛠️ Architecture
-
-```
-┌─────────────────────────────────────────────────────┐
-│                    OpenCode                          │
-│  ┌───────────────────────────────────────────────┐  │
-│  │         Zoey4OpenCode Plugin (Plugin)          │  │
-│  │  ┌──────────┐  ┌──────────┐  ┌─────────────┐ │  │
-│  │  │ Memory   │  │Companion │  │ Integration  │ │  │
-│  │  │ Tools    │  │ Tools    │  │ Hub         │ │  │
-│  │  └────┬─────┘  └────┬─────┘  └──────┬──────┘ │  │
-│  │       │              │               │         │  │
-│  │  ┌────▼──────────────▼───────────────▼──────┐ │  │
-│  │  │           SQLite Databases                │ │  │
-│  │  │   zoey-memory.db  │  zoey-companions.db  │ │  │
-│  │  └──────────────────────────────────────────┘ │  │
-│  └───────────────────────────────────────────────┘  │
-│                                                      │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────┐ │
-│  │  Atlas   │  │Architect │  │ Operator │  │Mentor│ │
-│  │ (Subagt) │  │(Subagt)  │  │ (Subagt) │  │(Subgt)││
-│  └──────────┘  └──────────┘  └──────────┘  └──────┘ │
-└─────────────────────────────────────────────────────┘
-```
-
----
-
-## 📚 Documentation
-
-| Guide | Description |
-|-------|-------------|
-| [Mind Map](docs/zoey-mindmap.html) | Visual architecture overview — see how everything connects |
-| [Non-Developer Guide](docs/zoey-nondev-guide.html) | Friendly guide for non-technical users |
-| [User Guide](docs/zoey-user-guide.html) | Complete install, interact, and adjust reference |
-
----
-
-## 🧪 Development
-
-These commands apply to the plugin source, which is not in this repository yet.
-
-```bash
-# Install dependencies
-bun install
-
-# Build the plugin
-bun run build
-
-# Watch mode (auto-rebuild on changes)
-bun run watch
-
-# Run smoke tests
-bun run test-smoke.mjs
-```
-
-### Tech Stack
-- **Runtime:** Bun 1.3+
-- **Language:** TypeScript
-- **Storage:** Bun:sqlite (embedded SQLite)
-- **Plugin SDK:** @opencode-ai/plugin
-- **Bundle Size:** ~465KB
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how you can help:
-
-- **Add a new companion** — Create a new agent definition in `agent/companions/`
-- **Extend the memory system** — Add new query capabilities or integrations
-- **Build integrations** — Connect GitHub, Slack, Notion via MCP servers
-- **Improve docs** — Better guides, examples, and tutorials
-
----
-
-## 📄 License
-
-MIT — see [`LICENSE`](LICENSE).
-
----
-
-## 🙏 Acknowledgments
-
-- Inspired by [Zoey OS](https://zoeyos.com) — "Your World. Your AI."
-- Built for [OpenCode](https://opencode.ai) — the open-source AI coding tool
-- Powered by [Bun](https://bun.sh) — fast JavaScript runtime
-
----
-
-<div align="center">
-  <strong>Zoey4OpenCode</strong> — Your AI companions, your data, your control.<br>
-  <sub>Built with ❤️ for the OpenCode community</sub>
-</div>
+MIT — see [LICENSE](LICENSE).
